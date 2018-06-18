@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/bottom_nav_feed"
+        android:enabled="true"
+        android:icon="@drawable/ic_bottom_nav_feed"
+        android:title="@string/bottom_nav_feed"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/bottom_nav_camera"
+        android:enabled="true"
+        android:icon="@drawable/ic_bottom_nav_camera"
+        android:title="@string/bottom_nav_camera"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/bottom_nav_profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_bottom_nav_profile"
+        android:title="@string/bottom_nav_profile"
+        app:showAsAction="ifRoom"
+        />
+</menu>

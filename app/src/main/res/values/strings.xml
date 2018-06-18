@@ -17,4 +17,9 @@
     <string name="error_invalid_email">Invalid email.</string>
     <string name="error_invalid_password">Invalid password.</string>
 
+    <!-- Bottom Navigation -->
+    <string name="bottom_nav_feed">Feed</string>
+    <string name="bottom_nav_camera">Camera</string>
+    <string name="bottom_nav_profile">Profile</string>
+
 </resources>

@@ -105,7 +105,7 @@
         android:layout_weight="1"
         android:background="@drawable/img_login"
         android:scaleType="centerCrop"
-        android:src="@drawable/gradient"
+        android:src="@drawable/shape_gradient"
         />
 
 </LinearLayout>
