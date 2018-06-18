@@ -25,6 +25,9 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.toString();
@@ -33,10 +36,12 @@ public class LoginActivity extends AppCompatActivity {
         return new Intent(context, LoginActivity.class);
     }
 
-    private TextInputEditText mEditTextEmail;
-    private TextInputLayout mTextInputLayoutEmail;
-    private TextInputEditText mEditTextPassword;
-    private TextInputLayout mTextInputLayoutPassword;
+    @BindView(R.id.etEmail) protected TextInputEditText mEditTextEmail;
+    @BindView(R.id.tilEmail) protected TextInputLayout mTextInputLayoutEmail;
+    @BindView(R.id.etPassword) protected TextInputEditText mEditTextPassword;
+    @BindView(R.id.tilPassword) protected TextInputLayout mTextInputLayoutPassword;
+    @BindView(R.id.viewControls) protected View mViewControls;
+    @BindView(R.id.viewProgress) protected View mViewProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initUI() {
         setContentView(R.layout.activity_login);
-        mEditTextEmail = findViewById(R.id.etEmail);
-        mTextInputLayoutEmail = findViewById(R.id.tilEmail);
-        mEditTextPassword = findViewById(R.id.etPassword);
-        mTextInputLayoutPassword = findViewById(R.id.tilPassword);
+        ButterKnife.bind(this);
         mEditTextPassword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -92,6 +94,16 @@ public class LoginActivity extends AppCompatActivity {
         return isValid;
     }
 
+    private void showProgress() {
+        mViewControls.setVisibility(View.INVISIBLE);
+        mViewProgress.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgress() {
+        mViewProgress.setVisibility(View.INVISIBLE);
+        mViewControls.setVisibility(View.VISIBLE);
+    }
+
     /*
      * UI Listeners
      */
@@ -105,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         LogInCallback callback = new LogInCallback() {
             public void done(ParseUser user, ParseException error) {
+                hideProgress();
                 if (user == null || error != null) {
                     Log.e(TAG, error.getMessage());
                     Toast.makeText(LoginActivity.this, R.string.error_login, Toast.LENGTH_LONG).show();
@@ -113,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
+        showProgress();
         AuthenticationUtils.login(username, password, callback);
     }
 
@@ -125,6 +139,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         SignUpCallback callback = new SignUpCallback() {
             public void done(ParseException error) {
+                hideProgress();
                 if (error != null) {
                     Log.e(TAG, error.getMessage());
                     Toast.makeText(LoginActivity.this, R.string.error_registration, Toast.LENGTH_LONG).show();
@@ -133,6 +148,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
+        showProgress();
         AuthenticationUtils.register(username, password, callback);
     }
 
