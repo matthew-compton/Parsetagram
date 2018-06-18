@@ -7,12 +7,17 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.parsetagram.R;
 import com.codepath.parsetagram.ui.landing.LandingActivity;
 import com.codepath.parsetagram.utils.AuthenticationUtils;
+import com.codepath.parsetagram.utils.KeyboardUtils;
 import com.codepath.parsetagram.utils.NavigationUtils;
 import com.codepath.parsetagram.utils.StringUtils;
 import com.parse.LogInCallback;
@@ -53,6 +58,16 @@ public class LoginActivity extends AppCompatActivity {
         mTextInputLayoutEmail = findViewById(R.id.tilEmail);
         mEditTextPassword = findViewById(R.id.etPassword);
         mTextInputLayoutPassword = findViewById(R.id.tilPassword);
+        mEditTextPassword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    onClickLogin(null);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -82,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
      */
 
     public void onClickLogin(View view) {
+        KeyboardUtils.hide(LoginActivity.this);
         String username = mEditTextEmail.getText().toString();
         String password = mEditTextPassword.getText().toString();
         if (!isValidData(username, password)) {
@@ -101,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClickRegister(View view) {
+        KeyboardUtils.hide(LoginActivity.this);
         String username = mEditTextEmail.getText().toString();
         String password = mEditTextPassword.getText().toString();
         if (!isValidData(username, password)) {
