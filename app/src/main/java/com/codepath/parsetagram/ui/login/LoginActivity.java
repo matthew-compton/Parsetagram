@@ -27,6 +27,7 @@ import com.parse.SignUpCallback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -64,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    onClickLogin(null);
+                    onClickLogin();
                     return true;
                 }
                 return false;
@@ -108,7 +109,8 @@ public class LoginActivity extends AppCompatActivity {
      * UI Listeners
      */
 
-    public void onClickLogin(View view) {
+    @OnClick(R.id.btnLogin)
+    protected void onClickLogin() {
         KeyboardUtils.hide(LoginActivity.this);
         String username = mEditTextEmail.getText().toString();
         String password = mEditTextPassword.getText().toString();
@@ -117,8 +119,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         LogInCallback callback = new LogInCallback() {
             public void done(ParseUser user, ParseException error) {
-                hideProgress();
                 if (user == null || error != null) {
+                    hideProgress();
                     Log.e(TAG, error.getMessage());
                     Toast.makeText(LoginActivity.this, R.string.error_login, Toast.LENGTH_LONG).show();
                 } else {
@@ -130,7 +132,8 @@ public class LoginActivity extends AppCompatActivity {
         AuthenticationUtils.login(username, password, callback);
     }
 
-    public void onClickRegister(View view) {
+    @OnClick(R.id.btnRegister)
+    protected void onClickRegister() {
         KeyboardUtils.hide(LoginActivity.this);
         String username = mEditTextEmail.getText().toString();
         String password = mEditTextPassword.getText().toString();
@@ -139,8 +142,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         SignUpCallback callback = new SignUpCallback() {
             public void done(ParseException error) {
-                hideProgress();
                 if (error != null) {
+                    hideProgress();
                     Log.e(TAG, error.getMessage());
                     Toast.makeText(LoginActivity.this, R.string.error_registration, Toast.LENGTH_LONG).show();
                 } else {
