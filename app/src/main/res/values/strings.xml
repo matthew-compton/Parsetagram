@@ -8,6 +8,10 @@
     <string name="log_in">Log in</string>
     <string name="register">Register</string>
 
+    <!-- Camera -->
+    <string name="caption">Caption</string>
+    <string name="submit">Submit</string>
+
     <!-- Profile -->
     <string name="logout">Logout</string>
 
