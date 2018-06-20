@@ -36,6 +36,10 @@ public class LandingActivity extends AppCompatActivity implements
     @BindView(R.id.fragment_container) protected FrameLayout mContainer;
     @BindView(R.id.bottom_navigation) protected BottomNavigationView mBottomNavigationView;
 
+    private FeedFragment mFeedFragment;
+    private CameraFragment mCameraFragment;
+    private ProfileFragment mProfileFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +53,17 @@ public class LandingActivity extends AppCompatActivity implements
 
     private void initUI() {
         ButterKnife.bind(this);
+        if (mFeedFragment == null) {
+            mFeedFragment = FeedFragment.newInstance();
+        }
+        if (mCameraFragment == null) {
+            mCameraFragment = CameraFragment.newInstance();
+        }
+        if (mProfileFragment == null) {
+            mProfileFragment = ProfileFragment.newInstance();
+        }
         mBottomNavigationView.setOnNavigationItemSelectedListener(this);
         mBottomNavigationView.setSelectedItemId(R.id.bottom_nav_feed);
-        NavigationUtils.navigate(LandingActivity.this, R.id.fragment_container, FeedFragment.newInstance());
     }
 
     /*
@@ -64,13 +76,13 @@ public class LandingActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             default:
             case R.id.bottom_nav_feed:
-                NavigationUtils.navigate(LandingActivity.this, containerResId, FeedFragment.newInstance());
+                NavigationUtils.navigate(this, containerResId, mFeedFragment);
                 break;
             case R.id.bottom_nav_camera:
-                NavigationUtils.navigate(LandingActivity.this, containerResId, CameraFragment.newInstance());
+                NavigationUtils.navigate(this, containerResId, mCameraFragment);
                 break;
             case R.id.bottom_nav_profile:
-                NavigationUtils.navigate(LandingActivity.this, containerResId, ProfileFragment.newInstance());
+                NavigationUtils.navigate(this, containerResId, mProfileFragment);
                 break;
         }
         return true;
