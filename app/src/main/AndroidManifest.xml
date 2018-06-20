@@ -8,8 +8,7 @@
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="true"
-        />
+        android:required="true"/>
 
     <application
         android:name=".ParsetagramApplication"
@@ -19,14 +18,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".ui.landing.LandingActivity"/>
+        <activity android:name=".ui.details.DetailActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -35,8 +35,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/paths"
-                />
+                android:resource="@xml/paths"/>
         </provider>
 
     </application>

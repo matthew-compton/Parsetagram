@@ -7,13 +7,16 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.Date;
+
 @ParseClassName("Post")
 public class Post extends ParseObject {
 
-    public static final String KEY_AUTHOR = "KEY_AUTHOR";
-    public static final String KEY_MEDIA = "KEY_MEDIA";
-    public static final String KEY_CAPTION = "KEY_CAPTION";
-    public static final String KEY_CREATED_AT = "createdAt";
+    private static final int QUERY_LIMIT = 20;
+    private static final String KEY_AUTHOR = "KEY_AUTHOR";
+    private static final String KEY_MEDIA = "KEY_MEDIA";
+    private static final String KEY_CAPTION = "KEY_CAPTION";
+    private static final String KEY_CREATED_AT = "createdAt";
 
     public ParseUser getAuthor() {
         return getParseUser(KEY_AUTHOR);
@@ -54,10 +57,18 @@ public class Post extends ParseObject {
 
     public static void getPostsForUser(FindCallback<Post> callback, ParseUser user) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.setLimit(QUERY_LIMIT);
         query.whereEqualTo(KEY_AUTHOR, user);
         query.include(KEY_AUTHOR);
         query.addDescendingOrder(KEY_CREATED_AT);
         query.findInBackground(callback);
     }
 
+    public static void getPost(FindCallback<Post> callback, Date date) {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.setLimit(1);
+        query.whereEqualTo(KEY_CREATED_AT, date);
+        query.include(KEY_AUTHOR);
+        query.findInBackground(callback);
+    }
 }

@@ -9,4 +9,7 @@ public class DateUtils {
         return new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
     }
 
+    public static String getFormattedTime(Date date) {
+        return new SimpleDateFormat("MM/dd/yyyy @ HH:mm z").format(date);
+    }
 }

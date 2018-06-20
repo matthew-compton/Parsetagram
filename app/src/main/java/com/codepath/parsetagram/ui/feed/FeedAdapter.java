@@ -1,6 +1,7 @@
 package com.codepath.parsetagram.ui.feed;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.parsetagram.R;
 import com.codepath.parsetagram.model.Post;
+import com.codepath.parsetagram.ui.details.DetailActivity;
+import com.codepath.parsetagram.utils.NavigationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,14 +43,22 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        Post post = mPosts.get(position);
+        final Post post = mPosts.get(position);
         String caption = post.getCaption();
         String url = post.getMedia().getUrl();
         holder.tvCaption.setText(caption);
         Glide.with(context)
                 .load(url)
                 .bitmapTransform(new RoundedCornersTransformation(context, 8, 0))
-                .into(holder.ivPosterImage);
+                .into(holder.ivPicture);
+        holder.ivPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = DetailActivity.newIntent(context, post);
+                NavigationUtils.navigate(context, intent);
+            }
+        });
     }
 
     @Override
@@ -62,7 +73,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.ivMedia) protected ImageView ivPosterImage;
+        @BindView(R.id.ivMedia) protected ImageView ivPicture;
         @BindView(R.id.tvCaption) protected TextView tvCaption;
 
         public ViewHolder(View itemView) {
