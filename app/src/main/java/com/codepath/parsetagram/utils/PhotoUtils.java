@@ -10,7 +10,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
-import android.support.v4.util.Pair;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -24,7 +23,7 @@ public class PhotoUtils {
     private static final String TAG = PhotoUtils.class.toString();
     private static final String AUTHORITY = "com.codepath.parsetagram";
 
-    public static Pair<String, Uri> dispatchTakePictureIntent(Fragment fragment, int requestCode) {
+    public static String dispatchTakePictureIntent(Fragment fragment, int requestCode) {
         if (fragment == null) return null;
         Activity activity = fragment.getActivity();
         if (activity == null) return null;
@@ -35,7 +34,7 @@ public class PhotoUtils {
 
         File photo = null;
         try {
-            photo = createImageFile(activity);
+            photo = getTempImageFile(activity);
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
         }
@@ -47,22 +46,15 @@ public class PhotoUtils {
         Uri uri = FileProvider.getUriForFile(activity, AUTHORITY, photo);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         fragment.startActivityForResult(intent, requestCode);
-        return new Pair<>(path, uri);
+        return path;
     }
 
-    private static File createImageFile(Context context) throws IOException {
+    private static File getTempImageFile(Context context) throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String fileNamePrefix = "JPEG_" + timeStamp + "_";
         String fileNameSuffix = ".jpg";
         File directory = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(fileNamePrefix, fileNameSuffix, directory);
-    }
-
-    public static void addImageToGallery(Context context, Uri uri) {
-        if (context == null) return;
-        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        intent.setData(uri);
-        context.sendBroadcast(intent);
     }
 
     public static void setImageBitmap(ImageView imageView, String path) {

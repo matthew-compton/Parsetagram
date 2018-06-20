@@ -7,16 +7,18 @@
              tools:context=".ui.profile.ProfileFragment">
 
     <LinearLayout
+        android:id="@+id/viewCreatePost"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/ivPicture"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_margin="16dp"
+            android:layout_weight="1"
             />
 
         <EditText
@@ -24,28 +26,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:enabled="false"
             android:hint="@string/caption"
             />
 
-        <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_margin="16dp"
-            android:text="@string/submit"
-            />
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:padding="16dp">
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:enabled="false"
+                android:text="@string/submit"
+                />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:src="@drawable/ic_bottom_nav_camera"
+                app:fabSize="normal"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabPhoto"
+    <ProgressBar
+        android:id="@+id/viewProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_bottom_nav_camera"
-        app:fabSize="normal"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="gone"
+        tools:visibility="visible"
         />
 
 </FrameLayout>

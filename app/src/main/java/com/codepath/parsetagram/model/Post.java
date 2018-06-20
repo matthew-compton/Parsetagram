@@ -8,19 +8,25 @@ import com.parse.ParseUser;
 @ParseClassName("Post")
 public class Post extends ParseObject {
 
-    public static final String KEY_USER = "KEY_USER";
+    public static final String KEY_AUTHOR = "KEY_AUTHOR";
     public static final String KEY_MEDIA = "KEY_MEDIA";
     public static final String KEY_CAPTION = "KEY_CAPTION";
-    public static final String KEY_AUTHOR = "KEY_AUTHOR";
-    public static final String KEY_COUNT_LIKES = "KEY_COUNT_LIKES";
-    public static final String KEY_COUNT_COMMENTS = "KEY_COUNT_COMMENTS";
 
-    public ParseUser getUser() {
-        return getParseUser(KEY_USER);
+    public static Post newInstance(ParseUser author, ParseFile media, String caption) {
+        Post post = new Post();
+        post.setAuthor(author);
+        post.setMedia(media);
+        post.setCaption(caption);
+        post.saveInBackground();
+        return post;
     }
 
-    public void setParseUser(ParseUser user) {
-        put(KEY_USER, user);
+    public ParseUser getAuthor() {
+        return getParseUser(KEY_AUTHOR);
+    }
+
+    public void setAuthor(ParseUser author) {
+        put(KEY_AUTHOR, author);
     }
 
     public ParseFile getMedia() {
@@ -37,30 +43,6 @@ public class Post extends ParseObject {
 
     public void setCaption(String caption) {
         put(KEY_CAPTION, caption);
-    }
-
-    public String getAuthor() {
-        return getString(KEY_AUTHOR);
-    }
-
-    public void setAuthor(String author) {
-        put(KEY_AUTHOR, author);
-    }
-
-    public int getCountLikes() {
-        return getInt(KEY_COUNT_LIKES);
-    }
-
-    public void setCountLikes(int countLikes) {
-        put(KEY_COUNT_LIKES, countLikes);
-    }
-
-    public int getCountComments() {
-        return getInt(KEY_COUNT_COMMENTS);
-    }
-
-    public void setCountComments(int countComments) {
-        put(KEY_COUNT_COMMENTS, countComments);
     }
 
 }
