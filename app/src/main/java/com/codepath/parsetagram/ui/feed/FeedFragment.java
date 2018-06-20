@@ -41,6 +41,7 @@ public class FeedFragment extends Fragment {
 
     private FeedCallbacks mListener;
     private FeedAdapter mAdapter;
+    private GridLayoutManager mLayoutManager;
     private OnRefreshListener mOnRefreshListener;
 
     @Override
@@ -93,17 +94,17 @@ public class FeedFragment extends Fragment {
                                 return;
                             }
                             mAdapter.setItems(posts);
+                            mLayoutManager.scrollToPosition(0);
                         }
                     });
                 }
             };
         }
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        mLayoutManager = new GridLayoutManager(getContext(), 2);
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
-        if (mAdapter.getItemCount() == 0) {
-            mOnRefreshListener.onRefresh();
-        }
+        mOnRefreshListener.onRefresh();
     }
 
 }

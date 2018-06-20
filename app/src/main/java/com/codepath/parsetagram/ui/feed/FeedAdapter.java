@@ -67,8 +67,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     }
 
     public void setItems(List<Post> posts) {
+        int diff = posts.size() - mPosts.size();
         mPosts = posts;
-        notifyDataSetChanged();
+        if (diff != 0) {
+            notifyItemRangeInserted(0, diff);
+        } else {
+            notifyDataSetChanged();
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

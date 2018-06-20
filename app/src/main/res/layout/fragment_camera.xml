@@ -28,6 +28,8 @@
             android:layout_margin="16dp"
             android:enabled="false"
             android:hint="@string/caption"
+            android:imeOptions="actionDone"
+            android:inputType="textShortMessage"
             />
 
         <LinearLayout
