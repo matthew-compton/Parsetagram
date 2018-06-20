@@ -15,8 +15,6 @@ import android.widget.ImageView;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class PhotoUtils {
 
@@ -50,8 +48,7 @@ public class PhotoUtils {
     }
 
     private static File getTempImageFile(Context context) throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String fileNamePrefix = "JPEG_" + timeStamp + "_";
+        String fileNamePrefix = "JPEG_" + DateUtils.getCurrentTimestamp() + "_";
         String fileNameSuffix = ".jpg";
         File directory = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(fileNamePrefix, fileNameSuffix, directory);
