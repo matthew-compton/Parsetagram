@@ -26,7 +26,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.landing.LandingActivity"/>
-        <activity android:name=".ui.details.DetailActivity"/>
+        <activity
+            android:name=".ui.details.DetailActivity"
+            android:parentActivityName=".ui.landing.LandingActivity"
+            />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
