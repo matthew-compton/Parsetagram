@@ -7,7 +7,8 @@ import com.parse.SignUpCallback;
 public class AuthenticationUtils {
 
     public static boolean isAuthenticated() {
-        return (ParseUser.getCurrentUser() != null);
+        ParseUser user = ParseUser.getCurrentUser();
+        return (user != null) && (user.isAuthenticated());
     }
 
     public static void login(String username, String password, LogInCallback callback) {
