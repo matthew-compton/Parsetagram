@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import com.codepath.parsetagram.R;
 import com.codepath.parsetagram.ui.camera.CameraCallbacks;
@@ -33,12 +36,13 @@ public class LandingActivity extends AppCompatActivity implements
         return new Intent(context, LandingActivity.class);
     }
 
-    @BindView(R.id.fragment_container) protected FrameLayout mContainer;
+    @BindView(R.id.viewpager) protected ViewPager mViewPager;
     @BindView(R.id.bottom_navigation) protected BottomNavigationView mBottomNavigationView;
 
     private FeedFragment mFeedFragment;
     private CameraFragment mCameraFragment;
     private ProfileFragment mProfileFragment;
+    private PagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +66,30 @@ public class LandingActivity extends AppCompatActivity implements
         if (mProfileFragment == null) {
             mProfileFragment = ProfileFragment.newInstance();
         }
+        mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                switch (position) {
+                    default:
+                    case 0:
+                        return mFeedFragment;
+                    case 1:
+                        return mCameraFragment;
+                    case 2:
+                        return mProfileFragment;
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return 3;
+            }
+        };
+        mViewPager.setAdapter(mPagerAdapter);
         mBottomNavigationView.setOnNavigationItemSelectedListener(this);
         mBottomNavigationView.setSelectedItemId(R.id.bottom_nav_feed);
     }
+
 
     /*
      * UI Listeners
@@ -72,17 +97,16 @@ public class LandingActivity extends AppCompatActivity implements
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int containerResId = R.id.fragment_container;
         switch (item.getItemId()) {
             default:
             case R.id.bottom_nav_feed:
-                NavigationUtils.navigate(this, containerResId, mFeedFragment);
+                mViewPager.setCurrentItem(0);
                 break;
             case R.id.bottom_nav_camera:
-                NavigationUtils.navigate(this, containerResId, mCameraFragment);
+                mViewPager.setCurrentItem(1);
                 break;
             case R.id.bottom_nav_profile:
-                NavigationUtils.navigate(this, containerResId, mProfileFragment);
+                mViewPager.setCurrentItem(2);
                 break;
         }
         return true;
